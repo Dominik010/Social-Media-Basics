@@ -10,16 +10,23 @@ namespace Extensions.Discord {
         [Tooltip("Enable automatic error reporting to Discord")]
         [SerializeField] WebhookSO[] discordWebhooks;
         [SerializeField] bool autoReportErrors = true;
+        [SerializeField] bool onlyReportInBuild = true; 
         protected override bool ShouldPersist => true;
         
         void OnEnable() {
+            if(onlyReportInBuild && Application.isEditor) { return; }
+            
             if (autoReportErrors) {
                 Application.logMessageReceived += HandleLogMessage;
             }
         }
         
         void OnDisable() {
-            Application.logMessageReceived -= HandleLogMessage;
+            if(onlyReportInBuild && Application.isEditor) { return; }
+
+            if (autoReportErrors) {
+                Application.logMessageReceived -= HandleLogMessage;
+            }
         }
         
         void HandleLogMessage(string logString, string stackTrace, LogType type) {

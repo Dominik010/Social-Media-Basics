@@ -1,5 +1,4 @@
 using System.Linq;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Extensions.Discord {
@@ -67,13 +66,6 @@ namespace Extensions.Discord {
                 return string.Empty;
             }
         }
-        
-        // Add this to your ErrorHandler.cs class
-        void OnApplicationQuit() {
-            
-        }
-        
-        [Button]
         void SendErrorToDiscord() {
             string errorMessage = "This is a test error message.";
             foreach (var discordWebhook in discordWebhooks) {
